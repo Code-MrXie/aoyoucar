@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3beichen@localhost.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.AoyoUderMapper">
+    <select id="LoginUser" resultType="com.example.demo.pojo.AoyoUser">
+        SELECT aoyo_name,aoyo_password FROM aoyo_user where aoyo_name=#{aoyoName}
+    </select>
+</mapper>
