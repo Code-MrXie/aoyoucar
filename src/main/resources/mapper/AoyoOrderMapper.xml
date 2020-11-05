@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3beichen@localhost.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.AoyoOrderMapper">
+    <resultMap id="order" type="com.example.demo.pojo.AoyoOrder">
+        <id column="order_id" property="orderId"></id>
+        <result column="aoyo_nikeName" property="aoyo_nikeName"></result>
+        <result column="group_name" property="group_name"></result>
+        <result column="order_input_time" property="orderInputTime"></result>
+        <result column="send_order_status" property="sendOrderStatus"></result>
+        <result column="pay_channel" property="payChannel"></result>
+        <result column="aoyo_name" property="aoyo_name"></result>
+    </resultMap>
+    <select id="queryAll" resultMap="order">
+        select ao.*,ac.commodity_name,sg.group_name,au.aoyo_nikeName,au.aoyo_name
+        from aoyo_order ao
+        left join aoyo_commodity ac on ao.commodity_id=ac.commodity_id
+        left join sys_group sg on ao.group_id=sg.group_id
+        left join aoyo_user au on ao.custom_id=au.aoyo_id
+    </select>
+</mapper>
