@@ -14,7 +14,12 @@ public class AoyoOrderServiceImpl implements AoyoOrderService {
     private AoyoOrderMapper aom;
 
     @Override
-    public List<AoyoOrder> queryAll() {
+    public List<AoyoOrder> queryAll( ) {
         return aom.queryAll();
+    }
+
+    @Override
+    public  List<AoyoOrder> queryByOrderCode(String orderCode) {
+        return aom.queryByOrderCode(orderCode);
     }
 }

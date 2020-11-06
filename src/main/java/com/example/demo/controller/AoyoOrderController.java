@@ -1,14 +1,13 @@
 package com.example.demo.controller;
 
 import com.example.demo.pojo.AoyoOrder;
+import com.example.demo.pojo.LayuiEntity;
 import com.example.demo.service.AoyoOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -16,9 +15,28 @@ import java.util.List;
 public class AoyoOrderController {
     @Autowired
     private AoyoOrderService aos;
-    @PostMapping("queryAll")
-    public List<AoyoOrder> queryAll(){
+
+    @GetMapping("queryAll")
+    public LayuiEntity queryAll(){
+        LayuiEntity layuiEntity=new LayuiEntity();
         List<AoyoOrder> aoyoOrders=aos.queryAll();
-        return aoyoOrders;
+        layuiEntity.setData(aoyoOrders);
+        layuiEntity.setCount(aoyoOrders.size());
+        layuiEntity.setMsg("成功");
+        layuiEntity.setCode(0);
+        return layuiEntity;
     }
+
+    @GetMapping("queryByOrderCode")
+    public LayuiEntity queryByOrderCode(HttpServletRequest request){
+        String orderCode=request.getParameter("orderCode");
+        LayuiEntity layuiEntity=new LayuiEntity();
+        List<AoyoOrder> aoyoOrder=aos.queryByOrderCode(orderCode);
+        layuiEntity.setData(aoyoOrder);
+        layuiEntity.setCount(aoyoOrder.size());
+        layuiEntity.setMsg("成功");
+        layuiEntity.setCode(0);
+        return layuiEntity;
+    }
+
 }

@@ -7,5 +7,7 @@ import java.util.List;
 
 @Repository
 public interface AoyoOrderMapper {
-    List<AoyoOrder> queryAll();
+    List<AoyoOrder> queryAll( );
+
+    List<AoyoOrder> queryByOrderCode(String orderCode);
 }

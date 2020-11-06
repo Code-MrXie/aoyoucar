@@ -8,6 +8,13 @@ spring:
     database: mysql
     hibernate:
       ddl-auto: none
+  application:
+    name: spring security
+  thymeleaf:
+    mode: HMTL5
+    encoding: UTF-8
+    #热部署
+    cache: false
 #mybatis的配置
 mybatis:
   #1.读取mapping映射文件

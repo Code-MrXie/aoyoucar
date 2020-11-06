@@ -5,6 +5,7 @@
 <mapper namespace="com.example.demo.mapper.AoyoOrderMapper">
     <resultMap id="order" type="com.example.demo.pojo.AoyoOrder">
         <id column="order_id" property="orderId"></id>
+        <result column="order_code" property="orderCode"></result>
         <result column="aoyo_nikeName" property="aoyo_nikeName"></result>
         <result column="group_name" property="group_name"></result>
         <result column="order_input_time" property="orderInputTime"></result>
@@ -18,5 +19,16 @@
         left join aoyo_commodity ac on ao.commodity_id=ac.commodity_id
         left join sys_group sg on ao.group_id=sg.group_id
         left join aoyo_user au on ao.custom_id=au.aoyo_id
+
     </select>
+    <select id="queryByOrderCode" resultMap="order">
+        select ao.*,ac.commodity_name,sg.group_name,au.aoyo_nikeName,au.aoyo_name
+        from aoyo_order ao
+        left join aoyo_commodity ac on ao.commodity_id=ac.commodity_id
+        left join sys_group sg on ao.group_id=sg.group_id
+        left join aoyo_user au on ao.custom_id=au.aoyo_id
+        where order_code=#{orderCode}
+    </select>
+
+
 </mapper>
