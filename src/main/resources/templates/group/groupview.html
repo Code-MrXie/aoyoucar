@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{assets/layui/css/layui.css}"/>
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+<script type="text/javascript" th:src="@{assets/js/jquery-3.3.1.min.js}"></script>
+<script type="text/javascript" th:src="@{assets/layui/layui.js}"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
+<script>
+    $(function () {
+        var parent_json = eval('('+parent.json+')');//获取父级参数
+        $("#groupId").html(parent_json.groupId)
+        $("#groupName").html(parent_json.groupName)
+        $("#groupDesc").html(parent_json.groupDesc)
+        $("#groupAddressDetails").html(parent_json.groupAddressDetails)
+    })
+
+</script>
+<div style="text-align: center;">
+    <span id="groupId" type="text"></span><br>
+    <span id="groupName" type="text"></span><br>
+    <span id="groupDesc" type="text"></span><br>
+    <span id="groupAddressDetails" type="text"></span><br>
+</div>
+
+
+</body>
+</html>
