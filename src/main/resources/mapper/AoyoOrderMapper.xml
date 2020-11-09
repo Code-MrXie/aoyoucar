@@ -29,6 +29,8 @@
         left join aoyo_user au on ao.custom_id=au.aoyo_id
         where order_code=#{orderCode}
     </select>
-
+    <delete id="delByCode">
+        delete from aoyo_order where order_code=#{orderCode}
+    </delete>
 
 </mapper>

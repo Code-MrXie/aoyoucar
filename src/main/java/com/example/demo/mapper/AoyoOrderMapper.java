@@ -10,4 +10,6 @@ public interface AoyoOrderMapper {
     List<AoyoOrder> queryAll( );
 
     List<AoyoOrder> queryByOrderCode(String orderCode);
+
+    int delByCode(String orderCode);
 }

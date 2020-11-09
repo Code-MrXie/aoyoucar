@@ -15,7 +15,7 @@ import java.util.List;
 public class AoyoOrderController {
     @Autowired
     private AoyoOrderService aos;
-
+/*全查table*/
     @GetMapping("queryAll")
     public LayuiEntity queryAll(){
         LayuiEntity layuiEntity=new LayuiEntity();
@@ -26,7 +26,7 @@ public class AoyoOrderController {
         layuiEntity.setCode(0);
         return layuiEntity;
     }
-
+/*根据订单查询*/
     @GetMapping("queryByOrderCode")
     public LayuiEntity queryByOrderCode(HttpServletRequest request){
         String orderCode=request.getParameter("orderCode");
@@ -37,6 +37,12 @@ public class AoyoOrderController {
         layuiEntity.setMsg("成功");
         layuiEntity.setCode(0);
         return layuiEntity;
+    }
+    /*根据订单号删除*/
+    @GetMapping("delByCode")
+    public int delByCode(@RequestParam("orderCode") String orderCode){
+        int a=aos.delByCode(orderCode);
+        return a;
     }
 
 }

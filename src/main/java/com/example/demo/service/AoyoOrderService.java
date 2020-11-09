@@ -8,4 +8,6 @@ public interface AoyoOrderService {
     List<AoyoOrder> queryAll( );
 
     List<AoyoOrder> queryByOrderCode(String orderCode);
+
+    int delByCode(String orderCode);
 }

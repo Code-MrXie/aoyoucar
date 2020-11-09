@@ -22,4 +22,9 @@ public class AoyoOrderServiceImpl implements AoyoOrderService {
     public  List<AoyoOrder> queryByOrderCode(String orderCode) {
         return aom.queryByOrderCode(orderCode);
     }
+
+    @Override
+    public int delByCode(String orderCode) {
+        return aom.delByCode(orderCode);
+    }
 }
