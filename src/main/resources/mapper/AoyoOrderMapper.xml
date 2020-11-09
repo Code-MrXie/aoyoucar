@@ -32,5 +32,7 @@
     <delete id="delByCode">
         delete from aoyo_order where order_code=#{orderCode}
     </delete>
-
+    <update id="changeOne" >
+        update aoyo_order set send_order_status=#{orderStatus},pay_channel=#{payChannel} where order_code=#{orderCode}
+    </update>
 </mapper>

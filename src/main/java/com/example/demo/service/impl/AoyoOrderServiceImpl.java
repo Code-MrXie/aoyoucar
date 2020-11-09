@@ -27,4 +27,9 @@ public class AoyoOrderServiceImpl implements AoyoOrderService {
     public int delByCode(String orderCode) {
         return aom.delByCode(orderCode);
     }
+
+    @Override
+    public int changeOne(String orderCode, Integer orderStatus,Integer payChannel) {
+        return aom.changeOne(orderCode,orderStatus,payChannel);
+    }
 }

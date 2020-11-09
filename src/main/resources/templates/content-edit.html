@@ -8,13 +8,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" th:href="@{assets/layui/css/layui.css}"/>
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+    <script type="text/javascript" th:src="@{js/jquery-3.3.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{assets/layui/layui.js}"></script>
+    <script>
+
+        $(function (){
+            var json = eval('('+parent.json+')');//获取父级参数
+            console.log(json);
+            $("#orderCode").val(json.orderCode);
+            $("#aoyo_nikeName").val(json.aoyo_nikeName);
+            $("#aoyo_name").val(json.aoyo_name);
+            $("#orderInputTime").val(json.orderInputTime);
+
+            $("#change").click(function (){
+                var  a = $("#orderStatus option:selected").val();　　　　//获取选中项
+                var b=$("#payChannel option:selected").val();
+                $.get({
+                    url:"/Order/changeOne",
+                    data:{orderCode:$("#orderCode").val(),orderStatus:a,payChannel:b},
+                    success:function (data){
+                        if (data!=0){
+                            alert("修改成功");
+                            window.location.reload();
+                        }
+                    }
+                })
+            })
+        })
+
+
+    </script>
 </head>
 <body>
+
 <div id="updateDiv">
-    订单编号:<input type="text" id="orderCode"><br>
-    用户昵称:<input type="text" id="aoyo_nikeName"><br>
-    用户名称:<input type="text" id="aoyo_name"><br>
-    下单时间:<input type="text" id="orderInputTime"><br>
+    <form id="orderForm">
+    订单编号:<input type="text" id="orderCode" disabled><br><br>
+    用户昵称:<input type="text" id="aoyo_nikeName" disabled><br><br>
+    用户名称:<input type="text" id="aoyo_name" disabled><br><br>
+    下单时间:<input type="text" id="orderInputTime" disabled><br><br>
     订单状态:<select id="orderStatus">
     <option>请选择</option>
     <option value="1">派单中</option>
@@ -23,8 +55,14 @@
     <option value="4">已付款</option>
     <option value="5">已发货</option>
     <option value="6">已接收</option>
-</select><br>
-    支付方式:<input type="text" id="payChannel"><br>
+</select><br><br>
+    支付方式:<select id="payChannel">
+    <option>请选择</option>
+    <option value="0">现金</option>
+    <option value="1">微信</option>
+</select><br><br>
+        <input type="button" id="change" value="提交更改">
+    </form>
 </div>
 
 </body>

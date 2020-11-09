@@ -44,5 +44,11 @@ public class AoyoOrderController {
         int a=aos.delByCode(orderCode);
         return a;
     }
-
+    /*根据订单号修改*/
+    @GetMapping("changeOne")
+    public int changeOne(String orderCode, Integer orderStatus,Integer payChannel){
+        System.out.println(orderCode+"---"+orderStatus+"---"+payChannel);
+        int a=aos.changeOne(orderCode,orderStatus,payChannel);
+        return a;
+    }
 }

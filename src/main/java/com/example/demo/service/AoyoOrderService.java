@@ -10,4 +10,6 @@ public interface AoyoOrderService {
     List<AoyoOrder> queryByOrderCode(String orderCode);
 
     int delByCode(String orderCode);
+
+    int changeOne(String orderCode, Integer orderStatus,Integer payChannel);
 }
