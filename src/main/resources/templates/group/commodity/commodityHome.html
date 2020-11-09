@@ -2,7 +2,6 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <title>Layui</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -12,18 +11,19 @@
 </head>
 <body>
 
-<table class="layui-hide" id="groupTable" lay-filter="test"></table>
+<table class="layui-hide" id="commodityTable" lay-filter="test"></table>
+
 <script type="text/javascript" th:src="@{assets/js/jquery-3.3.1.min.js}"></script>
 <script type="text/javascript" th:src="@{assets/layui/layui.js}"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 
 <script>
     layui.use('table', function(){
+        var groupId= window.location.href.split("?")[1].split("=")[1];
         var table = layui.table;
-
         table.render({
-            elem: '#groupTable',
-            url:'sysgroup/GetGroupAll',
+            elem: '#commodityTable',
+            url:'sysgroup/GetCommodityAll?groupId='+groupId,
             cellMinWidth: 80,//全局定义常规单元格的最小宽度，layui 2.2.1 新增
             cols: [
                 [
@@ -36,7 +36,7 @@
                         width:150,
                         title: '机构名称',
                         templet: function (d){
-                            return "<a href='commodityHome?groupId="+d.groupId+"'>"+d.groupName+"</a>"
+                            return "<a href='commodityHome'>"+d.commodityName+"</a>"
                         }
                     },
                     {
@@ -53,7 +53,7 @@
                     {
                         width:250,
                         title: '操作',
-                        toolbar:'#barDemo'
+                        toolbar:'#commodityCaozuo'
                     }
                 ]
             ]
@@ -104,14 +104,11 @@
             }
         });
     });
-
 </script>
-
-<script type="text/html" id="barDemo">
+<script type="text/html" id="commodityCaozuo">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
-
 </body>
 </html>

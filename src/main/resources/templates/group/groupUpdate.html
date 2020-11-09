@@ -8,9 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" th:href="@{assets/layui/css/layui.css}"/>
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+    <link rel="stylesheet" th:href="@{bootstrap/css/bootstrap.min.css}"/>
 </head>
 <body>
 <script type="text/javascript" th:src="@{assets/js/jquery-3.3.1.min.js}"></script>
+<script type="text/javascript" th:src="@{bootstrap/js/bootstrap.js}"></script>
 <script type="text/javascript" th:src="@{assets/layui/layui.js}"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 
@@ -22,19 +24,20 @@
         $("#groupDesc").val(parent_json.groupDesc)
         $("#groupAddressDetails").val(parent_json.groupAddressDetails)
     })
-    function groupUpdate() {
-        var groupForm=$("#groupForm").val()
-        alert(groupForm)
-        console.log(groupForm)
-    }
 
 </script>
-<div style="text-align: center;">
+<div class="container"><!--style="text-align: center;"-->
     <form action="/sysgroup/groupUpdate" enctype="multipart/form-data" method="post">
-        <input id="groupId" name="groupId" type="text"/><br>
-        <input id="groupName" name="groupName" type="text"/><br>
-        <input id="groupDesc" name="groupDesc" type="text"/><br>
-        <input id="groupAddressDetails" name="groupAddressDetails" type="text"/><br>
+        <div class="row">
+            ID:<input id="groupId" name="groupId" type="text" class="col-md-6"/>
+            &nbsp&nbsp
+            店铺名称:<input id="groupName" name="groupName" type="text" class="col-md-6"/>
+        </div>
+        <div class="row">
+            介绍:<input id="groupDesc" name="groupDesc" type="text" class="col-md-6"/>
+            &nbsp&nbsp
+            地址:<input id="groupAddressDetails" name="groupAddressDetails" type="text" class="col-md-6"/>
+        </div>
         <input type="submit" value="修改">
     </form>
 

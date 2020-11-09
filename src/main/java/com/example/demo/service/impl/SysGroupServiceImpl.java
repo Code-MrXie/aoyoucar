@@ -1,6 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.mapper.SysGroupMapper;
+import com.example.demo.pojo.AoyoCommodity;
 import com.example.demo.pojo.SysGroup;
 import com.example.demo.service.SysGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,12 @@ public class SysGroupServiceImpl implements SysGroupService {
     @Override
     public boolean groupUpdate(SysGroup sysGroup) {
         return sgm.groupUpdate(sysGroup);
+    }
+
+    //店铺列表展示---商品展示
+    @Override
+    public List<AoyoCommodity> GetCommodityAll(Integer groupId) {
+        return sgm.GetCommodityAll(groupId);
     }
 
 
