@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="author" content="方科新" />
+    <title>优惠券发布</title>
+    <link rel="stylesheet" th:href="@{assets/layui/css/layui.css}"/>
+    <link rel="stylesheet" th:href="@{assets/css/index.css}" />
+    <script type="text/javascript" th:src="@{assets/layui/layui.js}"></script>
+    <script type="text/javascript" th:src="@{assets/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{assets/js/tpWeather.js}"></script>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-tab layui-tab-brief" lay-filter="demo2"><!--可关闭的tab页lay-allowclose="true"-->
+        <ul class="layui-tab-title">
+            <li class="layui-this" lay-id="11">优惠券列表</li>
+<!--            <li lay-id="22">发行优惠券</li>-->
+        </ul>
+        <div class="layui-tab-content" style="height: 100px;">
+            <div class="layui-tab-item layui-show">
+                <div class="layui-layout layui-layout-admin">
+                    <div>
+                        <div class="layui-row" id="layerDemo" style="margin-top: 40px">
+                            <form class="layui-form layui-form-pane" lay-filter="formDemo">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">从</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="couponNewStartTime" id="datestart"  placeholder="开始时间" autocomplete="off" class="layui-input">
+                                    </div>
+                                    <label class="layui-form-label">到</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="couponNewEndTime" id="dateend"  placeholder="结束时间" autocomplete="off" class="layui-input">
+                                    </div>
+                                    <label class="layui-form-label">是否有门槛</label>
+                                    <div class="layui-input-inline"style="width: 130px">
+                                        <select name="couponNewSill" >
+                                            <option value="">请选择</option>
+                                            <option value="2">有门槛</option>
+                                            <option value="1">无门槛</option>
+                                        </select>
+                                    </div>
+                                    <label class="layui-form-label">状态</label>
+                                    <div class="layui-input-inline"style="width: 130px">
+                                        <select name="couponNewStatus" >
+                                            <option value=""></option>
+                                            <option value="2" name="">未开始</option>
+                                            <option value="1">已开始</option>
+                                            <option value="0">已发完</option>
+                                            <option value="-1">已过期</option>
+                                        </select>
+                                    </div>
+                                    <label class="layui-form-label">商户名称</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" autocomplete="off" name="groupName" placeholder="商户名称"
+                                               class="layui-input" >
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">优惠券名称</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" autocomplete="off" name="couponNewName" placeholder="优惠券名称"
+                                               class="layui-input">
+                                    </div>
+                                    <label class="layui-form-label">优惠券类型</label>
+                                    <div class="layui-input-inline">
+                                        <select name="couponNewTypeId">
+                                            <option value=""></option>
+                                            <option value="1" name="">现金券</option>
+                                            <option value="2">折扣券</option>
+                                        </select>
+                                    </div>
+                                    <label class="layui-form-label">创建时间</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text"  name="couponNewCreateTime" id="datecreatime"  placeholder="从" autocomplete="off" class="layui-input">
+                                    </div>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="couponNewOver" id="dateover"  placeholder="到" autocomplete="off" class="layui-input">
+                                    </div>
+                                    <div class="layui-input-inline" style="width: 100px">
+                                        <button class="layui-btn" style="width: 100%" type="button"
+                                                lay-submit lay-filter="formSelect">查询
+                                        </button>
+                                    </div>
+                                    <div class="layui-input-inline" style="width: 100px">
+                                        <button class="layui-btn" style="width: 100%" type="button"
+                                                onclick="addCoupon()">发行优惠券
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <table id="dataTable" lay-filter="demo"></table>
+                    </div>
+                </div>
+            </div>
+            <div hidden id="addCoupon">
+                <form class="layui-form layui-form-pane" lay-filter="formDemo1">
+                    <div style="width:410px;float:left;margin-left: 50px" >
+                        <div class="layui-form-item">
+                            <div class="layui-input-inline">
+                                <label class="layui-form-label">开始时间</label>
+                                <div class="layui-input-block">
+                                    <input type="text" style="width: 130px" name="couponNewStartTime" id="datestart1"  placeholder="开始时间" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-inline">
+                                <label class="layui-form-label">结束时间</label>
+                                <div class="layui-input-block">
+                                    <input type="text" style="width: 130px" name="couponNewEndTime" id="dateend1"  placeholder="结束时间" autocomplete="off" class="layui-input">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-inline">
+                                <label class="layui-form-label">发行量</label>
+                                <div class="layui-input-block">
+                                    <input type="text" autocomplete="off" name="couponNewCount" placeholder="发放数量"
+                                           style="width: 130px"  class="layui-input" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-inline">
+                                <label class="layui-form-label">用户限领</label>
+                                <div class="layui-input-block">
+                                    <input type="text" autocomplete="off" name="couponNewLimit"
+                                           style="width: 130px"  placeholder="张" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-inline">
+                                <label class="layui-form-label">优惠券描述</label>
+                                <div class="layui-input-block" style="width: 200px">
+                                    <input type="text" autocomplete="off" name="couponNwDesc" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="float:left;margin-left: 20px">
+                        <div class="layui-form-item">
+                            <div class="layui-input-inline">
+                                <label class="layui-form-label">优惠券名称</label>
+                                <div class="layui-input-block">
+                                    <input type="text" autocomplete="off" name="couponNewName" placeholder="优惠券名称"
+                                           style="width: 130px" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-inline">
+                                <label class="layui-form-label">优惠券类型</label>
+                                <div class="layui-input-block" style="width: 130px">
+                                    <select name="couponNewTypeId" >
+                                        <option value=""></option>
+                                        <option value="1" name="">现金券</option>
+                                        <option value="2">折扣券</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-inline">
+                                <label class="layui-form-label">优惠券面值</label>
+                                <div class="layui-input-block">
+                                    <input type="text" autocomplete="off" name="couponNewTypeAtribute"
+                                           style="width: 180px" placeholder="折扣0.00折/现金0..00元" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-inline">
+                                <label class="layui-form-label">是否有门槛</label>
+                                <div class="layui-input-block" style="width: 130px">
+                                    <select name="couponNewSill" >
+                                        <option value="">请选择</option>
+                                        <option value="2">有门槛</option>
+                                        <option value="1">无门槛</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-inline">
+                                <label class="layui-form-label">门槛值</label>
+                                <div class="layui-input-block">
+                                    <input type="text"  autocomplete="off" name="couponNewSillNum" placeholder="无门槛不填"
+                                           style="width: 130px" class="layui-input" >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-input-inline" style="width: 100px;display: none">
+                        <button class="layui-btn" style="width: 100%" type="button"
+                                lay-submit lay-filter="addformSelect" id="addformContent">添加
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- 第二区域-->
+            <div class="layui-tab-item">
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<style>
+    .layui-body {
+        left: 0px;
+    }
+
+    #dl dd {
+        margin-top: 10px;
+    }
+
+    #dl dd span {
+        color: #6f6f6f;
+    }
+</style>
+<script>
+    var lcId;
+    function addCoupon() {
+        layer.open({
+            type: 1
+            ,title: "发型优惠券" //不显示标题栏
+            ,closeBtn: false
+            ,area: ['50%','50%']
+            ,shade: 0
+            ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+            ,btn: ['添加', '关闭']
+            ,btnAlign: 'c'
+            ,moveType: 1 //拖拽模式，0或者1
+            ,content: $("#addCoupon")
+            ,btn1: function(index,layero){
+                $("#addformContent").click()
+            }
+        });
+    }
+    function openDiv(e){
+        layer.open({
+            type: 1
+            , id: 'layerDemo123'
+            , content: '<div style="padding: 20px 100px;">' + e + '</div>'
+            , btn: '关闭全部'
+            , btnAlign: 'c' //按钮居中
+            , shade: 0 //不显示遮罩
+            , yes: function () {
+                layer.closeAll();
+            }
+        });
+    }
+    $.fn.serializeObject = function () {
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function () {
+            if (o[this.name]) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+    };
+    //JavaScript代码区域
+    layui.use(["form",'laydate', "layer", "table", 'element','upload'], function () {
+        var element = layui.element;
+        var laydate = layui.laydate;
+        var upload = layui.upload;
+        var form = layui.form;
+        var layer = layui.layer;
+        var table = layui.table;
+        //日期时间选择器
+        laydate.render({
+            elem: '#datestart'
+            ,type: 'datetime'
+        });
+        laydate.render({
+            elem: '#dateend'
+            ,type: 'datetime'
+        });
+        laydate.render({
+            elem: '#datestart1'
+            ,type: 'datetime'
+        });
+        laydate.render({
+            elem: '#dateend1'
+            ,type: 'datetime'
+        });
+        laydate.render({
+            elem: '#datecreatime'
+            ,type: 'datetime'
+        });
+        laydate.render({
+            elem: '#dateover'
+            ,type: 'datetime'
+        });
+        //触发事件
+        var active = {
+            tabChange: function(){
+                //切换到指定Tab项
+                element.tabChange('demo2', '22'); //切换到：用户管理
+            },confirmTrans: function () {
+                //配置一个透明的询问框
+                layer.msg('在上传图片证明之前请一定要先添加学习中心!!!!', {
+                    time: 20000, //20s后自动关闭
+                    btn: [ '知道了']
+                });
+            }
+        };
+        form.on('submit(addformSelect)', function () {
+            //表单数据formData
+            // var formData = new FormData(document.getElementById("addCoupon"));
+            var formData = new FormData($("#addCoupon")[0]);
+            console.log(1)
+            $.ajax({
+                url: '/AoyoCouponNew/addAoyoCouponNew',
+                data: formData,
+                type: "post",
+                dataType:"json",
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data) {
+                        layer.msg("添加成功",{icon:6,time:2000});
+                    }else{
+                        layer.msg("添加失败",{icon:5,time:2000});
+                    }
+                }
+            })
+        });
+        //form提交
+        var movie={
+            couponNewName:"",
+            couponNewTypeId:"",
+            couponNewSill:"",
+            couponNewStartTime:"",
+            couponNewEndTime:"",
+            couponNewCreateTime:"",
+            couponNewStatus:"",
+            couponNewOver:"",
+            groupName:""
+        }
+        form.on('submit(formSelect)',function (data) {
+            movie.couponNewName=data.field.couponNewName;
+            movie.couponNewTypeId=data.field.couponNewTypeId;
+            movie.couponNewSill=data.field.couponNewSill;
+            movie.couponNewStartTime=data.field.couponNewStartTime;
+            movie.couponNewEndTime=data.field.couponNewEndTime;
+            movie.couponNewCreateTime=data.field.couponNewCreateTime;
+            movie.couponNewStatus=data.field.couponNewStatus;
+            movie.couponNewOver=data.field.couponNewOver;
+            movie.groupName=data.field.groupName;
+            if(movie.couponNewCreateTime==""&&movie.couponNewOver!=""){
+                openDiv("请设置开始时间!");
+                return;
+            }
+            if(movie.couponNewOver=='' && movie.couponNewCreateTime!=''){// || movie.couponNewOver!=null
+                openDiv("请设置结束时间!");
+                return;
+            }
+            tables(movie);
+        })
+        tables(movie);
+        //第一个实例
+        function tables(movie) {
+            table.render({
+                elem: '#dataTable'
+                , method: "post"
+                , height: 500
+                , where: movie
+                , cellMinWidth: 100 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                , url: '/AoyoCouponNew/queryAoyoCouponNewList' //数据接口
+                , page: true //开启分页
+                ,layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+                //,curr: 5 //设定初始在第 5 页
+                ,groups: 1 //只显示 1 个连续页码
+                ,first: false //不显示首页
+                ,last: false //不显示尾页
+                ,cols: [
+                    [
+                    {field: 'couponNewId', title: 'ID', width:60, sort: true, fixed: 'left'}
+                    ,{field: 'couponNewName', title: '优惠券名称', width:120}
+                    ,{field: 'couponNewCount', title: '发行量', width:100}
+                    ,{field: '', title: '优惠券类型', width:80, templet:function (e) {
+                            if (e.couponNewTypeId==1){
+                                return "现金券"
+                            }else{
+                                return "折扣券"
+                            }
+                        }}
+                    ,{field: '', title: '优惠金额', width:180, templet:function (e) {
+                            if (e.couponNewTypeId==2){
+                                return "最大折扣:"+e.couponNewTypeAtribute+"折";
+                            }else{
+                                return e.couponNewTypeAtribute+"元现金券";
+                            }
+                        }}
+                    ,{field: '', title: '是否门槛', width:100, templet:function (e) {
+                            if (e.couponNewSill==1){
+                                return "有门槛";
+                            }else{
+                                return "无门槛"
+                            }
+                        }}
+                    ,{field: '', title: '优惠卷门槛值', width:120, templet:function (e) {
+                            if (e.couponNewSillNum!=null &&e.couponNewSillNum!=''){
+                                return "最低门槛"+e.couponNewSillNum+"元";
+                            }else{
+                                return "无门槛不设值"
+                            }
+                        }}
+                    ,{field: '', title: '优惠卷状态', width:100, templet:function (e) {
+                            if (e.couponNewStatus==2){
+                                return "未开始 ";
+                            }else if(e.couponNewStatus==1){
+                                return "已开始"
+                            }else if(e.couponNewStatus==0){
+                                return "已发放完"
+                            }else{
+                                return "已过期"
+                            }
+                        }}
+                    ,{field: 'couponNewDesc', title: '优惠券描述', width:100}
+                    ,{field: '', title: '发布者', width:120, templet:function (e) {
+                            return e.sysGroup.groupName
+                        }}
+                    ,{field: 'couponNewLimit', title: '用户限领(张)', width:130}
+                    ,{field: 'couponNewStartTime', title: '开始时间', width:130,}/*sort: true*/
+                    ,{field: 'couponNewEndTime', title: '截止时间', width:130,}/*sort: true*/
+                    ,{field: 'couponNewCreateTime', title: '发布时间', width:130,}/*sort: true*/
+                    ,{field: '', title: '操作', width:180, templet:function (e) {
+                            return "<a class='layui-btn layui-btn-xs' lay-event='rate'>修改属性</a>"
+                        }}
+                ]
+                ]
+            });
+        }
+        //监听行工具事件
+        table.on('tool(demo)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'ugt'){
+                $.post({
+                    url: "${pageContext.request.contextPath}/ams/lcenter/selectLcUser",
+                    data: {LcId:data.lcId},
+                    contentType: 'application/json;charset=utf-8',
+                    async: false,
+                    success: function (data) {
+
+                    }
+                })
+            } else if(obj.event === 'details'){
+                data.lcId
+            }
+        });
+        $('#layerDemo1 .layui-btn').on('click', function(){
+            var othis = $(this), method = othis.data('method');
+            active[method] ? active[method].call(this, othis) : '';
+        });
+    });
+</script>
+</html>
+
