@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3beichen@localhost.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.SysGroupMapper">
+    <!--List<SysGroup> GetGroupAll();-->
+    <select id="GetGroupAll" resultType="SysGroup">
+        SELECT
+            *
+        FROM
+            sys_group sg
+        LEFT JOIN sys_group_address sga ON sg.ADDRESS_ID=sga.group_address_id
+
+
+    </select>
+
+    <!--boolean DelGroup(@Param("groupId") Integer groupId);-->
+    <delete id="DelGroup">
+        delete from sys_group where GROUP_ID=#{groupId}
+    </delete>
+
+    <!--boolean groupUpdate(@Param("sysGroup") SysGroup sysGroup);-->
+    <update id="groupUpdate">
+        update sys_group set GROUP_NAME = #{sysGroup.groupName} where GROUP_ID=#{sysGroup.groupId};
+    </update>
+</mapper>

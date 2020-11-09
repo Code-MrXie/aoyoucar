@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3beichen@localhost.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.AoyoCouponNewMapper">
+    <select id="queryAoyoCouponNewList" resultMap="queryAoyoCouponNewList">
+        select acn.*,sg.GROUP_NAME from aoyo_coupon_new acn
+        left join sys_group sg on acn.group_id = sg.GROUP_ID
+        <where>
+            <if test="groupName!=null and groupName!=''">
+                sg.group_name like concat('%',#{groupName},'%')
+            </if>
+            <if test="couponNewName!=null and couponNewName!=''">
+                and acn.coupon_new_name like concat('%',#{couponNewName},'%')
+            </if>
+            <if test="couponNewStatus!=null and couponNewStatus!=''">
+                and acn.coupon_new_status =#{couponNewStatus}
+            </if>
+            <if test="couponNewSill!=null and couponNewSill!=''">
+                and acn.coupon_new_sill =#{couponNewSill}
+            </if>
+            <if test="couponNewTypeId!=null and couponNewTypeId!=''">
+                and acn.coupon_new_type_id =#{couponNewTypeId}
+            </if>
+            <if test="couponNewStartTime!=null">
+                and acn.coupon_new_start_time &gt;= #{couponNewStartTime}
+            </if>
+            <if test="couponNewEndTime!=null">
+                and acn.coupon_new_end_time &lt;= #{couponNewEndTime}
+            </if>
+            <if test="couponNewCreateTime!=null and couponNewOver!=null">
+                and acn.coupon_new_create_time BETWEEN #{couponNewCreateTime} and #{couponNewOver}
+            </if>
+        </where>
+    </select>
+    <resultMap id="queryAoyoCouponNewList" autoMapping="true" type="com.example.demo.pojo.AoyoCouponNew">
+        <id column="coupon_new_id" property="couponNewId"></id>
+        <association property="sysGroup" autoMapping="true" javaType="com.example.demo.pojo.SysGroup">
+            <id column="group_id" property="groupId"></id>
+        </association>
+    </resultMap>
+    <insert id="addAoyoCouponNew" parameterType="com.example.demo.pojo.AoyoCouponNew">
+        insert into aoyo_coupon_new
+        (coupon_new_name,coupon_new_count,coupon_new_type_id,coupon_new_type_atribute
+        ,coupon_new_rebate_max,coupon_new_sill,coupon_new_sill_num,coupon_new_desc
+        ,coupon_new_status,coupon_new_status_atribute,group_id,coupon_new_limit
+        coupon_new_start_time,coupon_new_end_time,coupon_new_create_time)
+        values (
+        #{couponNewName},#{couponNewCount},#{couponNewTypeId},#{couponNewTypeAtribute}
+        ,#{couponNewRebateMax},#{couponNewSill},#{couponNewSillNum},#{couponNewDesc}
+        ,2,#{couponNewStatusAtribute},#{groupId},#{couponNewLimit}
+        ,#{couponNewStartTime},#{couponNewEndTime},now()
+        );
+    </insert>
+</mapper>

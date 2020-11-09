@@ -1,4 +1,11 @@
 spring:
+  application:
+    name: spring security
+  thymeleaf:
+    mode: HMTL5
+    encoding: UTF-8
+    #热部署
+    cache: false
   datasource:
     url: jdbc:mysql://47.95.226.40:3306/aoyo?serverTimezone=UTC&characterEncoding=utf8
     username: root
@@ -26,3 +33,9 @@ mybatis:
     #lazy-loading-enabled: true
     #4.起别名
   type-aliases-package: com.example.demo.pojo
+
+  #打印日志
+logging:
+  level:
+    com.example.demo.mapper: debug
+
