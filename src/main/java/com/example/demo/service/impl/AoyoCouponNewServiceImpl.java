@@ -27,4 +27,19 @@ public class AoyoCouponNewServiceImpl implements AoyoCouponNewService {
     public int addAoyoCouponNew(AoyoCouponNew couponNew) {
         return aoyoCouponNewMapper.addAoyoCouponNew(couponNew);
     }
+
+    @Override
+    public int uptformContent(AoyoCouponNew couponNew) {
+        return aoyoCouponNewMapper.uptformContent(couponNew);
+    }
+
+    @Override
+    public int upDeleteCoupons(int[] ids) {
+        return aoyoCouponNewMapper.upDeleteCoupons(ids);
+    }
+
+    @Override
+    public List<AoyoCouponNew> queryCouponNewList() {
+        return aoyoCouponNewMapper.queryCouponNewList();
+    }
 }

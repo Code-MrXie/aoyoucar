@@ -7,8 +7,9 @@
         select acn.*,sg.GROUP_NAME from aoyo_coupon_new acn
         left join sys_group sg on acn.group_id = sg.GROUP_ID
         <where>
+            acn.delete_flag=1
             <if test="groupName!=null and groupName!=''">
-                sg.group_name like concat('%',#{groupName},'%')
+                and sg.group_name like concat('%',#{groupName},'%')
             </if>
             <if test="couponNewName!=null and couponNewName!=''">
                 and acn.coupon_new_name like concat('%',#{couponNewName},'%')
@@ -39,12 +40,12 @@
             <id column="group_id" property="groupId"></id>
         </association>
     </resultMap>
-    <insert id="addAoyoCouponNew" parameterType="com.example.demo.pojo.AoyoCouponNew">
+    <insert id="addAoyoCouponNew" useGeneratedKeys="true" parameterType="com.example.demo.pojo.AoyoCouponNew">
         insert into aoyo_coupon_new
         (coupon_new_name,coupon_new_count,coupon_new_type_id,coupon_new_type_atribute
         ,coupon_new_rebate_max,coupon_new_sill,coupon_new_sill_num,coupon_new_desc
         ,coupon_new_status,coupon_new_status_atribute,group_id,coupon_new_limit
-        coupon_new_start_time,coupon_new_end_time,coupon_new_create_time)
+        ,coupon_new_start_time,coupon_new_end_time,coupon_new_create_time)
         values (
         #{couponNewName},#{couponNewCount},#{couponNewTypeId},#{couponNewTypeAtribute}
         ,#{couponNewRebateMax},#{couponNewSill},#{couponNewSillNum},#{couponNewDesc}
@@ -52,4 +53,23 @@
         ,#{couponNewStartTime},#{couponNewEndTime},now()
         );
     </insert>
+    <update id="uptformContent" parameterType="com.example.demo.pojo.AoyoCouponNew">
+        update aoyo_coupon_new set
+        coupon_new_name = #{couponNewName},coupon_new_count = #{couponNewCount}
+        ,coupon_new_type_id = #{couponNewTypeId},coupon_new_type_atribute =#{couponNewTypeAtribute}
+        ,coupon_new_rebate_max=#{couponNewRebateMax},coupon_new_sill=#{couponNewSill}
+        ,coupon_new_sill_num=#{couponNewSillNum},coupon_new_desc=#{couponNewDesc}
+        ,coupon_new_status_atribute = #{couponNewStatusAtribute},coupon_new_limit = #{couponNewLimit}
+        ,coupon_new_start_time = #{couponNewStartTime},coupon_new_end_time=#{couponNewEndTime}
+        where coupon_new_id=#{couponNewId}
+    </update>
+    <update id="upDeleteCoupons">
+        <foreach item="id" index="index" separator=";" collection="array">
+        update aoyo_coupon_new set delete_flag=0  where coupon_new_id =#{id}
+        </foreach>
+    </update>
+    <select id="queryCouponNewList" resultType="com.example.demo.pojo.AoyoCouponNew">
+        select acn.coupon_new_id,acn.coupon_new_start_time,acn.coupon_new_end_time
+        ,acn.coupon_new_status from aoyo_coupon_new acn
+    </select>
 </mapper>

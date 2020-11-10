@@ -18,7 +18,7 @@ public class AoyoCouponNew {
   private Integer couponNewSillNum;
   private String couponNewDesc;
   private Integer couponNewStatus;
-  private String couponNewStatusAtribute;
+  private Integer couponNewStatusAtribute;
   private Integer groupId;
   private Integer couponNewLimit;
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

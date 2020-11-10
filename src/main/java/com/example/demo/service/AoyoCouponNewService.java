@@ -9,4 +9,10 @@ public interface AoyoCouponNewService {
     PageInfo<AoyoCouponNew> queryAoyoCouponNewList(AoyoCouponNew couponNew);
 
     int addAoyoCouponNew(AoyoCouponNew couponNew);
+
+    int uptformContent(AoyoCouponNew couponNew);
+
+    int upDeleteCoupons(int[] ids);
+
+    List<AoyoCouponNew> queryCouponNewList();
 }
