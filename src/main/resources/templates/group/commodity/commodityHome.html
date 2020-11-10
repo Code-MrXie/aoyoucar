@@ -28,28 +28,52 @@
             cols: [
                 [
                     {
-                        field:'groupId',
+                        field:'commodityId',
                         width:150,
                         title: 'ID'
                     },
                     {
                         width:150,
-                        title: '机构名称',
+                        title: '商品名称',
                         templet: function (d){
                             return "<a href='commodityHome'>"+d.commodityName+"</a>"
                         }
                     },
                     {
-                        field:'groupDesc',
+                        field:'commodityDesc',
                         width:150,
-                        title: '机构介绍'
+                        title: '商品介绍'
                     },
                     {
-                        field:'groupAddressDetails',
-                        title: '地址',
-                        width: '30%',
+                        field:'commdityWeight',
+                        title: '商品重量',
                         Width: 150
                     }, //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
+                    {
+                        field:'commodityCostPrice',
+                        title: '商品成本价格',
+                        Width: 150
+                    },
+                    {
+                        field:'commoditySellingPrice',
+                        title: '商品销售价格',
+                        Width: 150
+                    },
+                    {
+                        field:'commodityStatus',
+                        title: '商品状态',
+                        Width: 150,
+                        templet: function (d){
+                            if(d.commodityStatus==1){
+                                return "上架"
+                            }else if(d.commodityStatus==2){
+                                return "下架"
+                            }else if(d.commodityStatus==null){
+                                return "WTF"
+                            }
+                        }
+
+                    },
                     {
                         width:250,
                         title: '操作',
@@ -70,7 +94,7 @@
                         title: '数据详情',
                         maxmin: true,
                         type: 2,
-                        content: '/groupview',
+                        content: '/commodityview',
                         area: ['1100px', '500px'],
 
                     });
@@ -94,7 +118,7 @@
                         title: '数据详情',
                         maxmin: true,
                         type: 2,
-                        content: '/groupUpdate',
+                        content: '/commodityUpdate',
                         area: ['600px', '800px'],
 
                     });

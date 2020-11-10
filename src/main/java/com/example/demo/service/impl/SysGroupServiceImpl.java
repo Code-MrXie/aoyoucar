@@ -38,5 +38,11 @@ public class SysGroupServiceImpl implements SysGroupService {
         return sgm.GetCommodityAll(groupId);
     }
 
+    //商品列表展示---商品修改
+    @Override
+    public boolean commodityUpdate(AoyoCommodity aoyoCommodity) {
+        return sgm.commodityUpdate(aoyoCommodity);
+    }
+
 
 }

@@ -44,4 +44,12 @@ public class SysGroupController {
         List<AoyoCommodity> list=sgs.GetCommodityAll(groupId);
         return  new BaseResponse(0,"成功",list);
     }
+
+    //商品列表展示---商品修改
+    @RequestMapping("commodityUpdate")
+    @ResponseBody
+    public boolean commodityUpdate(AoyoCommodity aoyoCommodity){
+        boolean b=sgs.commodityUpdate(aoyoCommodity);
+        return  b;
+    }
 }

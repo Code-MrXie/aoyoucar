@@ -16,4 +16,6 @@ public interface SysGroupMapper {
     boolean groupUpdate(@Param("sysGroup") SysGroup sysGroup);
 
     List<AoyoCommodity> GetCommodityAll(@Param("groupId") Integer groupId);
+
+    boolean commodityUpdate(@Param("aoyoCommodity") AoyoCommodity aoyoCommodity);
 }

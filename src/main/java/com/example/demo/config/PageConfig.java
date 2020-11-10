@@ -20,5 +20,7 @@ public class PageConfig implements WebMvcConfigurer {
         registry.addViewController("/groupview").setViewName("group/groupview");
         registry.addViewController("/groupUpdate").setViewName("group/groupUpdate");
         registry.addViewController("/commodityHome").setViewName("group/commodity/commodityHome");
+        registry.addViewController("/commodityUpdate").setViewName("group/commodity/commodityUpdate");
+        registry.addViewController("/commodityview").setViewName("group/commodity/commodityview");
     }
 }

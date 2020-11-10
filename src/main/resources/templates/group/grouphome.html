@@ -1,21 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <title>Layui</title>
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="author" content="方科新" />
+    <title>商户</title>
     <link rel="stylesheet" th:href="@{assets/layui/css/layui.css}"/>
-    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+    <link rel="stylesheet" th:href="@{assets/css/index.css}" />
+    <script type="text/javascript" th:src="@{assets/layui/layui.js}"></script>
+    <script type="text/javascript" th:src="@{assets/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{assets/js/tpWeather.js}"></script>
 </head>
-<body>
-
-<table class="layui-hide" id="groupTable" lay-filter="test"></table>
-<script type="text/javascript" th:src="@{assets/js/jquery-3.3.1.min.js}"></script>
-<script type="text/javascript" th:src="@{assets/layui/layui.js}"></script>
-<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 
 <script>
     layui.use('table', function(){
@@ -58,6 +55,24 @@
                 ]
             ]
         });
+
+        //监听表格排序问题
+        table.on('sort(test)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            console.log(obj.field); //当前排序的字段名
+            console.log(obj.type); //当前排序类型：desc（降序）、asc（升序）、null（空对象，默认排序）
+            console.log(this); //当前排序的 th 对象
+
+            //尽管我们的 table 自带排序功能，但并没有请求服务端。
+            //有些时候，你可能需要根据当前排序的字段，重新向服务端发送请求，从而实现服务端排序，如：
+            table.reload('groupTable', { //testTable是表格容器id
+                initSort: obj //记录初始排序，如果不设的话，将无法标记表头的排序状态。 layui 2.1.1 新增参数
+                ,where: { //请求参数（注意：这里面的参数可任意定义，并非下面固定的格式）
+                    field: obj.groupId //排序字段
+                    ,order: obj.type //排序方式
+                }
+            });
+        });
+
         //监听工具条
         table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
             var data = obj.data; //获得当前行数据
@@ -112,6 +127,11 @@
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
+
+
+<body>
+
+<table class="layui-hide" id="groupTable" lay-filter="test"></table>
 
 </body>
 </html>

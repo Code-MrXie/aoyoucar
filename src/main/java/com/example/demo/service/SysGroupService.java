@@ -13,4 +13,6 @@ public interface SysGroupService {
     boolean groupUpdate(SysGroup sysGroup);
 
     List<AoyoCommodity> GetCommodityAll(Integer groupId);
+
+    boolean commodityUpdate(AoyoCommodity aoyoCommodity);
 }
