@@ -1,9 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.pojo.AoyoCouponNew;
-import com.example.demo.pojo.AoyoUser;
 import com.example.demo.service.AoyoCouponNewService;
-import com.example.demo.service.AoyoUserService;
 import com.example.demo.utils.Result;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RequestMapping("/AoyoCouponNew")
