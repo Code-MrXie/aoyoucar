@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.pojo.AoyoCommodity;
 import com.example.demo.pojo.SysGroup;
 import com.example.demo.service.SysGroupService;
 import com.example.demo.utils.BaseResponse;
@@ -33,6 +34,22 @@ public class SysGroupController {
     @ResponseBody
     public boolean groupUpdate(SysGroup sysGroup){
         boolean b=sgs.groupUpdate(sysGroup);
+        return  b;
+    }
+
+    //店铺列表展示---商品展示
+    @GetMapping("GetCommodityAll")
+    public BaseResponse GetCommodityAll(Integer groupId){
+        System.out.println(groupId);
+        List<AoyoCommodity> list=sgs.GetCommodityAll(groupId);
+        return  new BaseResponse(0,"成功",list);
+    }
+
+    //商品列表展示---商品修改
+    @RequestMapping("commodityUpdate")
+    @ResponseBody
+    public boolean commodityUpdate(AoyoCommodity aoyoCommodity){
+        boolean b=sgs.commodityUpdate(aoyoCommodity);
         return  b;
     }
 }

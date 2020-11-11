@@ -19,24 +19,24 @@
 <script>
     $(function () {
         var parent_json = eval('('+parent.json+')');//获取父级参数
-        $("#groupId").val(parent_json.groupId)
-        $("#groupName").val(parent_json.groupName)
-        $("#groupDesc").val(parent_json.groupDesc)
-        $("#groupAddressDetails").val(parent_json.groupAddressDetails)
+        $("#commodityId").val(parent_json.commodityId)
+        $("#commodityName").val(parent_json.commodityName)
+        $("#commodityDesc").val(parent_json.commodityDesc)
+        $("#commdityWeight").val(parent_json.commdityWeight)
     })
 
 </script>
 <div class="container"><!--style="text-align: center;"-->
-    <form action="/sysgroup/groupUpdate" enctype="multipart/form-data" method="post">
+    <form action="/sysgroup/commodityUpdate" enctype="multipart/form-data" method="post">
         <div class="row">
-            ID:<input id="groupId" name="groupId" type="text" class="col-md-6"/>
+            ID:<input id="commodityId" name="commodityId" type="text" class="col-md-6"/>
             &nbsp&nbsp
-            店铺名称:<input id="groupName" name="groupName" type="text" class="col-md-6"/>
+            店铺名称:<input id="commodityName" name="commodityName" type="text" class="col-md-6"/>
         </div>
         <div class="row">
-            介绍:<input id="groupDesc" name="groupDesc" type="text" class="col-md-6"/>
+            介绍:<input id="commodityDesc" name="commodityDesc" type="text" class="col-md-6"/>
             &nbsp&nbsp
-            地址:<input id="groupAddressDetails" name="groupAddressDetails" type="text" class="col-md-6"/>
+            商品重量:<input id="commdityWeight" name="commdityWeight" type="text" class="col-md-6"/>
         </div>
         <input type="submit" value="修改">
     </form>

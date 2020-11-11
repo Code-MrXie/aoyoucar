@@ -1,78 +1,87 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="renderer" content="webkit" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="author" content="方科新" />
-    <title>商户</title>
+    <meta charset="utf-8">
+    <title>Layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" th:href="@{assets/layui/css/layui.css}"/>
-    <link rel="stylesheet" th:href="@{assets/css/index.css}" />
-    <script type="text/javascript" th:src="@{assets/layui/layui.js}"></script>
-    <script type="text/javascript" th:src="@{assets/js/jquery.min.js}"></script>
-    <script type="text/javascript" th:src="@{assets/js/tpWeather.js}"></script>
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
+<body>
+
+<table class="layui-hide" id="commodityTable" lay-filter="test"></table>
+
+<script type="text/javascript" th:src="@{assets/js/jquery-3.3.1.min.js}"></script>
+<script type="text/javascript" th:src="@{assets/layui/layui.js}"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 
 <script>
     layui.use('table', function(){
+        var groupId= window.location.href.split("?")[1].split("=")[1];
         var table = layui.table;
-
         table.render({
-            elem: '#groupTable',
-            url:'sysgroup/GetGroupAll',
+            elem: '#commodityTable',
+            url:'sysgroup/GetCommodityAll?groupId='+groupId,
             cellMinWidth: 80,//全局定义常规单元格的最小宽度，layui 2.2.1 新增
             cols: [
                 [
                     {
-                        field:'groupId',
+                        field:'commodityId',
                         width:150,
                         title: 'ID'
                     },
                     {
                         width:150,
-                        title: '机构名称',
+                        title: '商品名称',
                         templet: function (d){
-                            return "<a href='commodityHome?groupId="+d.groupId+"'>"+d.groupName+"</a>"
+                            return "<a href='commodityHome'>"+d.commodityName+"</a>"
                         }
                     },
                     {
-                        field:'groupDesc',
+                        field:'commodityDesc',
                         width:150,
-                        title: '机构介绍'
+                        title: '商品介绍'
                     },
                     {
-                        field:'groupAddressDetails',
-                        title: '地址',
-                        width: '30%',
+                        field:'commdityWeight',
+                        title: '商品重量',
                         Width: 150
                     }, //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
                     {
+                        field:'commodityCostPrice',
+                        title: '商品成本价格',
+                        Width: 150
+                    },
+                    {
+                        field:'commoditySellingPrice',
+                        title: '商品销售价格',
+                        Width: 150
+                    },
+                    {
+                        field:'commodityStatus',
+                        title: '商品状态',
+                        Width: 150,
+                        templet: function (d){
+                            if(d.commodityStatus==1){
+                                return "上架"
+                            }else if(d.commodityStatus==2){
+                                return "下架"
+                            }else if(d.commodityStatus==null){
+                                return "WTF"
+                            }
+                        }
+
+                    },
+                    {
                         width:250,
                         title: '操作',
-                        toolbar:'#barDemo'
+                        toolbar:'#commodityCaozuo'
                     }
                 ]
             ]
         });
-
-        //监听表格排序问题
-        table.on('sort(test)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-            console.log(obj.field); //当前排序的字段名
-            console.log(obj.type); //当前排序类型：desc（降序）、asc（升序）、null（空对象，默认排序）
-            console.log(this); //当前排序的 th 对象
-
-            //尽管我们的 table 自带排序功能，但并没有请求服务端。
-            //有些时候，你可能需要根据当前排序的字段，重新向服务端发送请求，从而实现服务端排序，如：
-            table.reload('groupTable', { //testTable是表格容器id
-                initSort: obj //记录初始排序，如果不设的话，将无法标记表头的排序状态。 layui 2.1.1 新增参数
-                ,where: { //请求参数（注意：这里面的参数可任意定义，并非下面固定的格式）
-                    field: obj.groupId //排序字段
-                    ,order: obj.type //排序方式
-                }
-            });
-        });
-
         //监听工具条
         table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
             var data = obj.data; //获得当前行数据
@@ -85,7 +94,7 @@
                         title: '数据详情',
                         maxmin: true,
                         type: 2,
-                        content: '/groupview',
+                        content: '/commodityview',
                         area: ['1100px', '500px'],
 
                     });
@@ -109,7 +118,7 @@
                         title: '数据详情',
                         maxmin: true,
                         type: 2,
-                        content: '/groupUpdate',
+                        content: '/commodityUpdate',
                         area: ['600px', '800px'],
 
                     });
@@ -119,19 +128,11 @@
             }
         });
     });
-
 </script>
-
-<script type="text/html" id="barDemo">
+<script type="text/html" id="commodityCaozuo">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
-
-
-<body>
-
-<table class="layui-hide" id="groupTable" lay-filter="test"></table>
-
 </body>
 </html>

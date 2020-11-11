@@ -23,4 +23,15 @@
     <update id="groupUpdate">
         update sys_group set GROUP_NAME = #{sysGroup.groupName} where GROUP_ID=#{sysGroup.groupId};
     </update>
+
+    <!--List<AoyoCommodity> GetCommodityAll(@Param("groupId") Integer groupId);-->
+    <select id="GetCommodityAll" resultType="AoyoCommodity">
+        select * from aoyo_commodity where group_id=#{groupId};
+    </select>
+
+    <!--boolean commodityUpdate(@Param("aoyoCommodity") AoyoCommodity aoyoCommodity);-->
+    <update id="commodityUpdate">
+        update aoyo_commodity set commodity_name = #{aoyoCommodity.commodityName} where commodity_id=#{aoyoCommodity.commodityId};
+    </update>
+
 </mapper>
