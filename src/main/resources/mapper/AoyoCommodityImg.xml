@@ -3,7 +3,28 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3beichen@localhost.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.CommodityImgMapper">
-    <select id="queryComodityImgList">
-        select * from
+    <select id="queryComodityImgList" resultType="com.example.demo.pojo.AoyoCommodityImg">
+        select aci.* from aoyo_commodity_img aci where  aci.lunbo_status!='' and delete_flag=1
     </select>
+    <insert id="addComodityImg" useGeneratedKeys="true" parameterType="com.example.demo.pojo.AoyoCommodityImg">
+        insert into aoyo_commodity_img
+        (lunbo_status,commodity_img_lastupdate_time,commodity_img_status,
+        commodity_img_index,
+        commodity_img_url,commodity_img_desc)
+        values (#{lunboStatus},now(),#{commodityImgStatus},
+        #{commodityImgIndex},
+        #{commodityImgUrl},#{commodityImgDesc})
+    </insert>
+    <update id="updComodityImg" parameterType="com.example.demo.pojo.AoyoCommodityImg">
+        update aoyo_commodity_img set
+        commodity_img_lastupdate_time=now(),commodity_img_status=#{commodityImgStatus},
+        commodity_img_index=#{commodityImgIndex},
+        commodity_img_url=#{commodityImgUrl},commodity_img_desc=#{commodityImgDesc}
+        where commodity_img_id=#{commodityImgId}
+    </update>
+    <update id="upDeleteCommodityImg">
+        <foreach item="id" index="index" separator=";" collection="array">
+            update aoyo_commodity_img set delete_flag=0  where commodity_img_id=#{id}
+        </foreach>
+    </update>
 </mapper>

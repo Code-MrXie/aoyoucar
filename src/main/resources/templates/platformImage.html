@@ -6,7 +6,7 @@
     <meta name="renderer" content="webkit" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="author" content="方科新" />
-    <title>轮播图管理</title>
+    <title>功能按钮管理</title>
     <link rel="stylesheet" th:href="@{assets/layui/css/layui.css}"/>
     <link rel="stylesheet" th:href="@{assets/css/index.css}" />
     <script type="text/javascript" th:src="@{assets/layui/layui.js}"></script>
@@ -18,33 +18,34 @@
 <div class="layui-layout layui-layout-admin">
     <div class="layui-tab layui-tab-brief" lay-filter="demo2"><!--可关闭的tab页lay-allowclose="true"-->
         <ul class="layui-tab-title">
-            <li class="layui-this" lay-id="11">管理轮播图</li>
+            <li class="layui-this" lay-id="11">管理功能按钮</li>
         </ul>
         <div class="layui-tab-content" style="height: 100px;">
             <div class="layui-tab-item layui-show">
                 <div class="layui-layout layui-layout-admin">
                     <table id="dataTable" lay-filter="dataTable"></table>
                     <script type="text/html" id="toolbarDemo">
-                            <button class="layui-btn layui-btn-sm" lay-event="getCheckData">添加新轮播图</button>
+                            <button class="layui-btn layui-btn-sm" lay-event="getCheckData">添加新功能按钮</button>
                             <button class="layui-btn layui-btn-sm" type="button"
-                                    lay-submit lay-filter="removeCoupon" lay-event="removeCoupon">批量删除轮播图
+                                    lay-submit lay-filter="removeCoupon" lay-event="removeCoupon">批量删除按钮
                             </button>
                     </script>
                 </div>
             </div>
-            <div hidden  id="addCommodityImgDiv">
-                <form id="addCommodityImg" class="layui-form layui-form-pane" lay-filter="formDemo1">
+            <div hidden  id="addPlatformDiv">
+                <form id="addPlatform" class="layui-form layui-form-pane" lay-filter="formDemo1">
                     <div style="width:410px;float:left;margin-left: 50px" >
-                        <input name="commodityImgId" hidden="hidden" type="text">
+                        <input name="platformImageId" hidden="hidden" type="text">
+                        <input name="platformImageUri" hidden="hidden" type="text">
                         <div class="layui-form-item">
                             <div class="layui-inline">
                                 <div class="layui-form-item">
-                                    <label class="layui-form-label " style="width:130px;margin-left:20px;font-size: 16px">轮播图片</label>
+                                    <label class="layui-form-label " style="width:130px;margin-left:20px;font-size: 16px">功能按钮</label>
                                     <div class="layui-upload">
                                         <label for="inputfile1" style="height: 226px" class="btn btn-default addImg ">
                                             <img id="inputfile2" src="http://oss-xys.oss-cn-beijing.aliyuncs.com/jxcerp/add.png" width="200px" height="200px">
                                         </label>
-                                        <input type="file" hidden="hidden" class="sr-only"  id="inputfile1" name="lunboFile" onchange="fileimg(this)" />
+                                        <input type="file" hidden="hidden" class="sr-only"  id="inputfile1" name="platformFile" onchange="fileimg(this)" />
                                         <div class="delimg" style="vertical-align: top;display:none">
                                             <button onclick="deleteImg(this)" type="button" class="layui-btn layui-icon layui-btn-danger layui-btn-xs">&#xe640;</button>
                                         </div>
@@ -56,13 +57,10 @@
                     <div style="float:left;margin-left: 20px">
                         <div class="layui-form-item">
                             <div class="layui-input-inline">
-                                <label class="layui-form-label">是否为主图</label>
+                                <label class="layui-form-label">图片名称</label>
                                 <div class="layui-input-block" style="width: 130px">
-                                    <select name="commodityImgIndex" >
-                                        <option value="">请选择</option>
-                                        <option value="1">为主图</option>
-                                        <option value="0">为副图</option>
-                                    </select>
+                                    <input type="text" autocomplete="off" name="platformImageName"
+                                           style="width: 180px" placeholder="名称" class="layui-input">
                                 </div>
                             </div>
                         </div>
@@ -70,7 +68,7 @@
                             <div class="layui-input-inline">
                                 <label class="layui-form-label">图片状态</label>
                                 <div class="layui-input-block">
-                                    <select name="commodityImgStatus" >
+                                    <select name="platformImageStatus" >
                                         <option value="">请选择</option>
                                         <option value="1">启用</option>
                                         <option value="0">未启用</option>
@@ -80,17 +78,17 @@
                         </div>
                         <div class="layui-form-item">
                             <div class="layui-input-inline">
-                                <label class="layui-form-label">轮播图描述</label>
+                                <label class="layui-form-label">信息描述</label>
                                 <div class="layui-input-block">
-                                    <input type="text" autocomplete="off" name="commodityImgDesc"
-                                           style="width: 180px" placeholder="描述" class="layui-input">
+                                    <input type="text" autocomplete="off" name="platformImageDesc"
+                                           style="width: 180px" placeholder="信息描述" class="layui-input">
                                 </div>
                             </div>
                         </div>
                         <div class="layui-form-item" id="remove" hidden="hidden">
                             <div class="layui-input-inline"  style="width: 130px">
                                 <button class="layui-btn" style="width: 100%" type="button"
-                                        lay-submit lay-filter="removeCommodityImg">删除轮播图
+                                        lay-submit lay-filter="removeCommodityImg">删除此按钮
                                 </button>
                             </div>
                         </div>
@@ -180,11 +178,11 @@
         var delimgs=$(del).parent().prevAll(".addImg").children("img")
         $(delimgs).attr("src","http://oss-xys.oss-cn-beijing.aliyuncs.com/jxcerp/add.png");
     }
-    function addCommodityImg() {
+    function addPlatform() {
         $("#remove").attr("hidden","hidden");
         layer.open({
             type: 1
-            ,title: "添加轮播图" //不显示标题栏
+            ,title: "添加功能按钮" //不显示标题栏
             ,closeBtn: false
             ,area: ['50%','50%']
             ,shade: 0
@@ -192,7 +190,7 @@
             ,btn: ['添加', '关闭']
             ,btnAlign: 'c'
             ,moveType: 1 //拖拽模式，0或者1
-            ,content: $("#addCommodityImgDiv")
+            ,content: $("#addPlatformDiv")
             ,btn1: function(index,layero){
                 $("#addformContent").click()
             }
@@ -224,11 +222,11 @@
                 });
             }
         };
-        form.on('submit(addformSelect)', function (data) {
+        form.on('submit(uptformContent)', function () {
             //表单数据formData
-            var formData = new FormData($("#addCommodityImg")[0]);
+            var formData = new FormData($("#addPlatform")[0]);
             $.ajax({
-                url: '/comodityImg/addComodityImg',
+                url: '/platformImage/addPlatformImage',
                 data: formData,
                 type: "post",
                 dataType:"json",
@@ -236,19 +234,41 @@
                 contentType: false,
                 success: function (data) {
                     if (data.flag) {
-                        layer.msg("添加成功",{icon:6,time:2000});
+                        layer.msg(data.msg,{icon:6,time:2000});
+                        table.reload('dataTable', {})
+                        layer.closeAll("page");
                     }else{
-                        layer.msg("添加失败",{icon:5,time:2000});
+                        layer.msg(data.msg,{icon:5,time:2000});
+                        layer.closeAll("page");
+                    }
+                }
+            })
+        });
+        form.on('submit(addformSelect)', function (data) {
+            //表单数据formData
+            var formData = new FormData($("#addPlatform")[0]);
+            $.ajax({
+                url: '/platformImage/addPlatformImage',
+                data: formData,
+                type: "post",
+                dataType:"json",
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data.flag) {
+                        layer.msg(data.msg,{icon:6,time:2000});
+                    }else{
+                        layer.msg(data.msg,{icon:5,time:2000});
                     }
                 }
             })
         });
         form.on('submit(removeCommodityImg)', function (data) {
             var ids = [];
-            ids.push(data.field.commodityImgId)
+            ids.push(data.field.platformImageId)
             console.log(ids)
             $.ajax({
-                url: '/comodityImg/upDeleteCommodityImg',
+                url: '/platformImage/upDeleteplatformImage',
                 data: {ids: ids.toString()},
                 type: "post",
                 success: function (data) {
@@ -257,41 +277,18 @@
                         layer.closeAll()
                         table.reload('dataTable', {})
                     }else{
-                        layer.msg("删除失败",{icon:5,time:2000});
+                        layer.msg(data.msg,{icon:5,time:2000});
                         layer.closeAll()
                         table.reload('dataTable', {})
                     }
                 }
             })
         });
-        form.on('submit(uptformContent)', function () {
-            //表单数据formData
-            var formData = new FormData($("#addCommodityImg")[0]);
-            $.ajax({
-                url: '/comodityImg/updComodityImg',
-                data: formData,
-                type: "post",
-                dataType:"json",
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    if (data.flag) {
-                        layer.msg("修改成功",{icon:6,time:2000});
-                        table.reload('dataTable', {})
-                        layer.closeAll("page");
-                    }else{
-                        layer.msg("修改失败",{icon:5,time:2000});
-                        layer.closeAll("page");
-                    }
-                }
-            })
-        });
         //form提交
         var movie={
-            lunboFile:"",
-            commodityImgIndex:"",
-            commodityImgStatus:"",
-            commodityImgDesc:""
+            platformImageDesc:"",
+            platformImageName:"",
+            platformImageStatus:"",
         }
         tables(movie);
         //第一个实例
@@ -302,7 +299,7 @@
                 , height: 500
                 ,toolbar: '#toolbarDemo'
                 , cellMinWidth: 100 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-                , url: '/comodityImg/queryComodityImgList' //数据接口
+                , url: '/platformImage/queryplatformImages' //数据接口
                 , page: true //开启分页
                 ,layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
                 //,curr: 5 //设定初始在第 5 页
@@ -312,12 +309,12 @@
                 ,cols: [
                     [
                         {type:'checkbox'}
-                        ,{field: 'commodityImgId', title: 'ID', width:60, sort: true}
-                        ,{field: 'commodityImgDesc', title: '图片描述', width:120}
-                        ,{field: 'commodityImgUrl', title: '图片地址', width:100}
-                        ,{field: 'commodityImgIndex', title: '是否为主图', width:100}
-                        ,{field: 'commodityImgSort', title: '图片排序', width:100}
-                        ,{field: 'commodityImgStatus', title: '图片状态', width:100,
+                        ,{field: 'platformImageId', title: 'ID', width:60, sort: true}
+                        ,{field: 'platformImageName', title: '图片名称', width:120}
+                        ,{field: 'platformImageUri', title: '图片地址', width:100}
+                        ,{field: 'creatTime', title: '创建时间', width:100}
+                        ,{field: 'platformImageDesc', title: '图片描述', width:100}
+                        ,{field: 'platformImageStatus', title: '图片状态', width:100,
                             templet:function (e) {
                             if (e.commodityImgStatus==0){
                                 return "无效";
@@ -325,21 +322,19 @@
                                 return "有效"
                             }
                         }}
-                        ,{field: 'commodityImgLastupdateTime', title: '上次修改时间', width:120}
                     ]
                 ]
             });
             //监听行单击事件（双击事件为：rowDouble）
             table.on('row(dataTable)', function(obj){
                 form.val('formDemo1', {
-                    // "lunboFile":obj.data.commodityImgUrl,
-                    "commodityImgIndex":obj.data.commodityImgIndex,
-                    "commodityImgStatus":obj.data.commodityImgStatus,
-                    "commodityImgDesc":obj.data.commodityImgDesc,
-                    "commodityImgId":obj.data.commodityImgId
-
+                    "platformImageDesc":obj.data.platformImageDesc,
+                    "platformImageId":obj.data.platformImageId,
+                    "platformImageUri":obj.data.platformImageUri,
+                    "platformImageName":obj.data.platformImageName,
+                    "platformImageStatus":obj.data.platformImageStatus,
                 });
-                $("#inputfile2").attr("src",obj.data.commodityImgUrl);
+                $("#inputfile2").attr("src",obj.data.platformImageUri);
                 $("#remove").removeAttr("hidden");
                 layer.open({
                     type: 1
@@ -351,12 +346,12 @@
                     ,btn: ['修改', '关闭']
                     ,btnAlign: 'c'
                     ,moveType: 1 //拖拽模式，0或者1
-                    ,content: $("#addCommodityImgDiv")
+                    ,content: $("#addPlatformDiv")
                     ,btn1: function(index,layero){
                         $("#uptformContent").click()
                     },btn2: function(index,layero){
                         layer.closeAll()
-                        $("#addCommodityImg")[0].reset();
+                        $("#addPlatform")[0].reset();
                         $("#inputfile2").attr("src","http://oss-xys.oss-cn-beijing.aliyuncs.com/jxcerp/add.png");
                     }
                 });
@@ -365,7 +360,7 @@
         //监听行工具事件
         table.on('toolbar(dataTable)', function(obj){
             if(obj.event === 'getCheckData'){
-                addCommodityImg()
+                addPlatform()
             }else if(obj.event ==="removeCoupon"){
                 var checkStatus = layui.table.checkStatus('dataTable').data;
                 var ids = [];
@@ -379,11 +374,11 @@
                     type: "post",
                     success: function (data) {
                         if (data.flag) {
-                            layer.msg("删除成功",{icon:6,time:2000});
+                            layer.msg(data.msg,{icon:6,time:2000});
                             layer.closeAll()
                             table.reload('dataTable', {})
                         }else{
-                            layer.msg("删除失败",{icon:5,time:2000});
+                            layer.msg(data.msg,{icon:5,time:2000});
                             layer.closeAll()
                             table.reload('dataTable', {})
                         }

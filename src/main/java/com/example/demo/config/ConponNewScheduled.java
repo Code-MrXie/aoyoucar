@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 
 public class ConponNewScheduled {
     @Autowired
     private AoyoCouponNewService aoyoCouponNewService;
+
     @Scheduled(cron = "0/10 * * * * ?")
     public void updCouponNewStatus(){
         /**
@@ -22,10 +22,10 @@ public class ConponNewScheduled {
          *AoyoCouponNew
          */
         List<AoyoCouponNew> aoyoCouponNews = aoyoCouponNewService.queryCouponNewList();
-        Date date = new Date();
+        SimpleDateFormat simpleDateFormat =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             for (AoyoCouponNew aoyoCouponNew : aoyoCouponNews) {
-               /* if (aoyoCouponNew.getCouponNewStartTime() < date.getTime()){
+                /*if (aoyoCouponNew.getCouponNewStartTime() < simpleDateFormat){
 
                 }*/
             }

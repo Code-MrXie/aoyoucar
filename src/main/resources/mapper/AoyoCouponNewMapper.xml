@@ -72,4 +72,17 @@
         select acn.coupon_new_id,acn.coupon_new_start_time,acn.coupon_new_end_time
         ,acn.coupon_new_status from aoyo_coupon_new acn
     </select>
+    <!--定时器修改优惠券状态-->
+    <update id="updCouponNewStatus">
+        UPDATE aoyo_coupon_new
+        SET coupon_new_status = #{couponNewStatus}
+        WHERE
+        state = #{whereState}
+        <if test="endTime != null">
+            and date_format(end_time,'%Y-%m-%d %H:%i') <![CDATA[<]]> date_format(#{endTime}, '%Y-%m-%d %H:%i')
+        </if>
+        <if test="startTime != null">
+            and date_format(start_time,'%Y-%m-%d %H:%i') <![CDATA[<=]]> date_format(#{startTime}, '%Y-%m-%d %H:%i')
+        </if>
+    </update>
 </mapper>

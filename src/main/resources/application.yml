@@ -32,3 +32,25 @@ logging:
   level:
     com.example.demo.mapper: debug
 
+#设置文件上传大小限制
+#spring:
+#  http:
+#    multipart:
+#      maxFileSize : 10Mb
+#      maxRequestSize: 100Mb
+#server:
+#  connection-timeout: 18000000
+#阿里云oss服务器
+aliyun:
+  access-id: LTAI4FgoqPc6enDjoEEk656A
+  access-key: 9Wms1jqjl2k7UEupXJuWRJdp9uL6g5
+  #创建bucket的名称
+  bucket: oss-xys
+  #服务器地址
+  endpoint: oss-cn-beijing.aliyuncs.com
+  #文件路径
+  dir: lunbo
+pagehelper:
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
