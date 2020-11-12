@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{assets/layui/css/layui.css}"/>
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+
+<table class="layui-hide" id="test" lay-filter="complainList"></table>
+
+<script type="text/javascript" th:src="@{assets/layui/layui.js}"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+
+        table.render({
+            elem: '#test'
+            ,url:'information/informationall'
+            ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            ,cols: [
+                [
+                    {field:'merchantId', width:150, title: 'ID'}
+                    ,{field:'merchantCode', width:150, title: '商户编码'}
+                    ,{field:'merchantName', width:150, title: '商户名称'}
+                    ,{field:'merchantType', width:150, title: '商户类型'}
+                    ,{field:'merchantAddress', title: '商户地址',Width: 150} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
+                    ,{field:'merchantTel',  width:150, title: '商户电话'}
+                    ,{field:'merchantContacts',  width:150, title: '商户联系人'}
+                    ,{fixed: 'right', title:'操作', toolbar: '#barDemo'}
+                ]
+            ]
+        });
+
+        table.on('tool(complainList)', function(obj) {
+            var data = obj.data;
+            json = JSON.stringify(data);
+            switch(obj.event) {
+                case 'detail':
+                    console.log("商户详情页面");
+                    var index = layer.open({
+                        type: 2,
+                        title: "商户详情页面",
+                        area: ['50%', '60%'],
+                        fix: false,
+                        maxmin: true,
+                        shadeClose: true,
+                        shade: 0.4,
+                        skin: 'layui-layer-rim',
+                        content: ["getInfo", "no"],
+                    });
+                    break;
+                case 'edit':
+                    var index = layer.open({
+                        type: 2,
+                        title: "编辑投诉页面",
+                        area: ['30%', '60%'],
+                        fix: false,
+                        maxmin: true,
+                        shadeClose: true,
+                        shade: 0.4,
+                        skin: 'layui-layer-rim',
+                        content: ["/medicaladmin/complain/complainEdit", "no"],
+                    });
+                    break;
+                case 'del':
+                    var delIndex = layer.confirm('真的删除id为' + data.id + "的信息吗?", function(delIndex) {
+                        $.ajax({
+                            url: '/medicaladmin/complain/delete/'+data.id,
+                            type: "post",
+                            success: function(suc) {
+                                if(suc.code == 200) {
+                                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                                    layer.close(delIndex);
+                                    console.log(delIndex);
+                                    layer.msg("删除成功", {
+                                        icon: 1
+                                    });
+                                } else {
+                                    layer.msg("删除失败", {
+                                        icon: 5
+                                    });
+                                }
+                            }
+                        });
+                        layer.close(delIndex);
+                    });
+                    break;
+            }
+        });
+    });
+
+</script>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+</body>
+</html>

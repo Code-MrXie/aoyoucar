@@ -37,4 +37,6 @@ public class AoyoOrder {
   private String group_name;
   private String aoyo_nikeName;
   private String aoyo_name;
+  private long cancelStatus;
+  private long userId;
 }

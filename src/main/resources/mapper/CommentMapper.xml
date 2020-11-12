@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3beichen@localhost.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.CommentMapper">
+    <resultMap id="restmap" type="com.example.demo.pojo.AoyoCommodityComment">
+            <id property="commodityCommentId" column="commodity_comment_id"></id>
+            <result property="orderId" column="order_id"></result>
+    </resultMap>
+    <select id="commentall" resultMap="restmap" >
+     SELECT
+	aoyo_custom.name,
+	aoyo_commodity_comment.*,
+	aoyo_commodity.commodity_name,
+	aoyo_order.order_code
+FROM
+	aoyo_custom,
+	aoyo_commodity_comment,
+	aoyo_commodity,
+	aoyo_order
+WHERE
+	aoyo_custom.custom_id = aoyo_commodity_comment.custom_id
+	AND aoyo_commodity.commodity_id = aoyo_commodity_comment.commodity_id
+
+	AND aoyo_order.order_id = aoyo_commodity_comment.order_id
+    </select>
+</mapper>

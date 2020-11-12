@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3beichen@localhost.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.AoyoCommodityNormsMapper">
+    <select id="Normsall" resultType="com.example.demo.pojo.AoyoCommodityNorms">
+        SELECT aoyo_commodity_norms.*, aoyo_commodity.commodity_name FROM aoyo_commodity_norms
+        LEFT JOIN aoyo_commodity ON aoyo_commodity_norms.norms_id=aoyo_commodity.commodity_id
+    </select>
+    <insert id="addCommodity" useGeneratedKeys="true" parameterType="com.example.demo.pojo.AoyoCommodity">
+        INSERT into aoyo_commodity(commodity_name) VALUES(#{commodityName})
+    </insert>
+    <insert id="addNorms" useGeneratedKeys="true" parameterType="com.example.demo.pojo.AoyoCommodityNorms">
+        INSERT into aoyo_commodity_norms (commodity_id,norms_name,norms_value)
+        VALUES(#{commodityId},#{normsName},#{normsValue})
+    </insert>
+</mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3beichen@localhost.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.CommodityStockMapper">
+    <select id="Stockall" resultType="com.example.demo.pojo.AoyoCommodityStock">
+ SELECT aoyo_commodity_stock.*, aoyo_commodity.commodity_name FROM aoyo_commodity_stock
+ LEFT JOIN aoyo_commodity ON aoyo_commodity_stock.commodity_stock_id=aoyo_commodity.commodity_id
+    </select>
+    <insert id="addCommodity" useGeneratedKeys="true" parameterType="com.example.demo.pojo.AoyoCommodityStock">
+        INSERT into aoyo_commodity(commodity_name) VALUES(#{commodityName})
+    </insert>
+    <insert id="StockAdd" useGeneratedKeys="true" parameterType="com.example.demo.pojo.AoyoCommodityStock">
+         insert into aoyo_commodity_stock (commodity_id,commodity_stock_number)
+          values (#{commodityId},#{commodityStockNumber})
+          ON DUPLICATE KEY UPDATE commodity_stock_number = #{commodityStockNumber}
+
+    </insert>
+</mapper>

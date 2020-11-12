@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3beichen@localhost.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.AoyoCommodityMapper">
+
+    <select id="Commodityall" resultType="com.example.demo.pojo.AoyoCommodity">
+        SELECT * FROM aoyo_commodity
+    </select>
+
+    <select id="showDetailById" resultType="com.example.demo.pojo.AoyoCommodity">
+         SELECT * FROM aoyo_commodity where commodity_id = #{id}
+    </select>
+    <insert id="addCommoditys" useGeneratedKeys="true" parameterType="com.example.demo.pojo.AoyoCommodity">
+        INSERT INTO aoyo_commodity (commodity_id,commodity_number,commodity_name,commdity_weight,commodity_selling_price,commodity_cost_price)
+        VALUES(#{commodityId},${commodityNumber},#{commodityName},#{commdityWeight},#{commoditySellingPrice},#{commodityCostPrice})
+    </insert>
+</mapper>
