@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3beichen@localhost.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.AoyoClassifyMapper">
+
+    <select id="CommodityCLass" resultType="AoyoCommodityClass">
+        SELECT * FROM aoyo_commodity_class
+    </select>
+
+    <delete id="deleteClass">
+
+		DELETE from aoyo_commodity_class WHERE class_id = #{classId};
+
+	</delete>
+
+    <!--//修改查询-->
+    <select id="selectByClassId" resultType="AoyoCommodityClass">
+        SELECT * FROM aoyo_commodity_class where class_id = #{classId}
+    </select>
+
+    <!--修改-->
+    <update id="updateClass" parameterType="AoyoCommodityClass">
+        UPDATE  aoyo_commodity_class SET class_name=#{className},group_id=#{groupId},class_desc=#{classDesc},
+        status_id=#{statusId},class_income_ratio=#{classIncomeRatio} WHERE class_id=#{classId};
+
+    </update>
+
+    <insert id="addClass" parameterType="com.example.demo.pojo.AoyoCommodityClass">
+             insert into aoyo_commodity_class(class_name,group_id,class_desc,status_id,parent_class_id,class_income_ratio)
+             values(#{className},#{groupId},#{classDesc},#{statusId},1,#{classIncomeRatio})
+   </insert>
+
+
+
+
+    <select id="CarList" resultType="CarBrand">
+        SELECT * FROM aoyo_car_brand
+    </select>
+
+    <delete id="deleteCar">
+
+		DELETE from aoyo_car_brand WHERE car_brand_id = #{carBrandId};
+
+	</delete>
+
+    <!--//修改查询-->
+    <select id="selectCarById" resultType="CarBrand">
+        SELECT * FROM aoyo_car_brand where car_brand_id = #{carBrandId}
+    </select>
+
+    <!--修改-->
+    <update id="updateCar" parameterType="CarBrand">
+        UPDATE aoyo_car_brand SET car_brand_initials=#{carBrandInitials},car_brand_name=#{carBrandName},car_brand_url=#{carBrandUrl},
+        delete_flag=#{deleteFlag},car_brand_parent_id=#{carBrandParentId},car_brand_py_first_letter=#{carBrandPyFirstLetter} WHERE car_brand_id=#{carBrandId};
+
+    </update>
+
+    <insert id="addCar" parameterType="CarBrand">
+             insert into aoyo_car_brand(car_brand_initials,car_brand_name,car_brand_url,delete_flag,car_brand_parent_id,car_brand_py_first_letter)
+             values(#{carBrandInitials},#{carBrandName},#{carBrandUrl},#{deleteFlag},#{carBrandParentId},#{carBrandPyFirstLetter})
+   </insert>
+
+</mapper>
